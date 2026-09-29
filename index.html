@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ôn Tập 4000 Từ Vựng Tiếng Anh | 4000 Essential English Words</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Standalone Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Favicon icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-full flex flex-col transition-colors duration-200">
+
+  <!-- TOP HEADER -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4">
+      
+      <!-- Brand Logo & Title -->
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0 cursor-pointer" onclick="window.app.showBookList()">
+        <span class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-indigo-800 text-white flex items-center justify-center text-xl shadow-md shadow-indigo-600/20">
+          📖
+        </span>
+        <div>
+          <span class="text-base font-extrabold text-slate-900 dark:text-white leading-tight block">
+            4000 English Words
+          </span>
+          <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block -mt-0.5">
+            6 Sách • 180 Units • 8 Trò Chơi
+          </span>
+        </div>
+      </div>
+
+      <!-- Quick Selector for Book & Unit -->
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <!-- Book Select -->
+        <select id="header-book-select" 
+          onchange="window.app.showUnitList(parseInt(this.value))"
+          class="text-xs sm:text-sm font-bold py-1.5 px-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-white focus:outline-none focus:border-indigo-500 cursor-pointer">
+          <option value="1">Book 1 (A2)</option>
+          <option value="2">Book 2 (B1)</option>
+          <option value="3">Book 3 (B1+)</option>
+          <option value="4">Book 4 (B2)</option>
+          <option value="5">Book 5 (C1)</option>
+          <option value="6">Book 6 (C2)</option>
+        </select>
+
+        <!-- Unit Select -->
+        <select id="header-unit-select" 
+          onchange="window.app.showStudyList(null, parseInt(this.value))"
+          class="text-xs sm:text-sm font-bold py-1.5 px-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-white focus:outline-none focus:border-indigo-500 cursor-pointer">
+          <option value="1">Unit 1</option><option value="2">Unit 2</option><option value="3">Unit 3</option><option value="4">Unit 4</option><option value="5">Unit 5</option>
+          <option value="6">Unit 6</option><option value="7">Unit 7</option><option value="8">Unit 8</option><option value="9">Unit 9</option><option value="10">Unit 10</option>
+          <option value="11">Unit 11</option><option value="12">Unit 12</option><option value="13">Unit 13</option><option value="14">Unit 14</option><option value="15">Unit 15</option>
+          <option value="16">Unit 16</option><option value="17">Unit 17</option><option value="18">Unit 18</option><option value="19">Unit 19</option><option value="20">Unit 20</option>
+          <option value="21">Unit 21</option><option value="22">Unit 22</option><option value="23">Unit 23</option><option value="24">Unit 24</option><option value="25">Unit 25</option>
+          <option value="26">Unit 26</option><option value="27">Unit 27</option><option value="28">Unit 28</option><option value="29">Unit 29</option><option value="30">Unit 30</option>
+        </select>
+      </div>
+
+      <!-- Global Search Bar -->
+      <div class="relative flex-1 max-w-xs hidden md:block" id="search-container">
+        <div class="relative">
+          <input type="text" id="global-search-input"
+            oninput="window.app.handleSearchInput(this.value)"
+            placeholder="Tra cứu từ vựng... [Ctrl + K]"
+            class="w-full text-xs py-2 pl-8 pr-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500">
+          <span class="absolute left-2.5 top-2.5 text-xs text-slate-400">🔍</span>
+        </div>
+        <!-- Search Dropdown Results -->
+        <div id="search-dropdown" class="hidden absolute left-0 right-0 mt-2 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 z-50 overflow-hidden"></div>
+      </div>
+
+      <!-- Right Nav Buttons: Theme & Settings -->
+      <div class="flex items-center gap-2">
+        <!-- Dark/Light Theme Toggle -->
+        <button onclick="window.app.toggleTheme()" title="Chuyển chế độ Sáng / Tối"
+          class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-sm shadow-sm transition">
+          <span id="theme-icon">🌙</span>
+        </button>
+
+        <!-- Settings Modal Trigger -->
+        <button onclick="window.app.showSettingsModal()" title="Cài đặt phát âm & âm thanh"
+          class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 text-sm shadow-sm transition flex items-center gap-1.5 font-semibold text-xs">
+          <span>⚙️</span> <span class="hidden sm:inline">Cài đặt</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Secondary Navigation Bar -->
+    <div class="border-t border-slate-100 dark:border-slate-700/60 bg-slate-50/50 dark:bg-slate-900/50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-11 flex items-center justify-between text-xs overflow-x-auto custom-scroll">
+        <div class="flex items-center gap-1 sm:gap-2 shrink-0">
+          <button id="nav-books" onclick="window.app.showBookList()" class="px-3 py-1.5 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600">
+            📚 Chọn Sách
+          </button>
+          <button id="nav-units" onclick="window.app.showUnitList()" class="px-3 py-1.5 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600">
+            📑 30 Units
+          </button>
+          <button id="nav-study" onclick="window.app.showStudyList()" class="px-3 py-1.5 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600">
+            📖 Học từ vựng
+          </button>
+          <button id="nav-flashcards" onclick="window.app.startFlashcards()" class="px-3 py-1.5 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600">
+            🎴 Thẻ Flashcard
+          </button>
+          <button id="nav-quiz" onclick="window.app.startQuiz()" class="px-3 py-1.5 rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600">
+            🎯 Trắc nghiệm
+          </button>
+          <button id="nav-games_hub" onclick="window.app.showGamesHub()" class="px-3 py-1.5 rounded-xl font-bold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-900 hover:opacity-90 flex items-center gap-1">
+            <span>🎮</span> Khu Vực Trò Chơi (8 Games)
+          </button>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-2 text-slate-400 text-[11px] shrink-0">
+          <span>🔊 Hỗ trợ phát âm chuẩn bản xứ (US / UK)</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN APP CONTAINER -->
+  <main id="main-content" class="flex-1 py-6">
+    <div class="flex items-center justify-center min-h-[50vh]">
+      <div class="text-center">
+        <div class="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+        <p class="text-sm text-slate-500 font-medium">Đang mở dữ liệu từ vựng...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800 py-5 text-center text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4">
+      <p class="font-medium text-slate-600 dark:text-slate-300">
+        4000 Essential English Words • Chạy trực tiếp offline trên trình duyệt (Không cần server)
+      </p>
+      <p class="text-slate-400 dark:text-slate-500 mt-1">
+        6 Sách • 180 Units • 3,601 Từ vựng • 8 Trò chơi ôn tập tương tác.
+      </p>
+    </div>
+  </footer>
+
+  <!-- MODALS CONTAINER -->
+  <div id="settings-modal"></div>
+
+  <!-- SCRIPT FILES (Loaded synchronously for 100% offline file:/// compatibility) -->
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/flashcard.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/spelling.js"></script>
+  <script src="js/match.js"></script>
+  <script src="js/game_scramble.js"></script>
+  <script src="js/game_falling.js"></script>
+  <script src="js/game_balloon.js"></script>
+  <script src="js/game_sentence.js"></script>
+  <script src="js/game_truefalse.js"></script>
+  <script src="js/game_crossword.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
